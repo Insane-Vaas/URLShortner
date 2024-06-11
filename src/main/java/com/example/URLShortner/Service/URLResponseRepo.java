@@ -9,4 +9,8 @@ public interface URLResponseRepo extends JpaRepository<UrlResponse, Integer> {
     @Query("From #{#entityName} WHERE shortURL = ?1")
     UrlResponse findByShortUrl(String urlLink);
 
+
+    @Query("From #{#entityName} WHERE longURL = ?1")
+    UrlResponse findByLongUrl(String urlLink);
+
 }
