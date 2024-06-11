@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -23,20 +27,27 @@ public class URLServiceImpl implements URLService {
     URLResponseRepo urlResponseRepo;
 
     Logger logger = LoggerFactory.getLogger(Controller.class);
-    HashMap<String, String> urlList = new HashMap<>();
 
     @Override
     public String execute(URLRequest urlRequest) {
+        String longURL = urlRequest.getUrl();
         logger.info(urlRequest.toString());
-        String shortUrl = hashAlgorithm(urlRequest.getUrl());
-        urlList.put(urlRequest.getUrl(),shortUrl);
+        String shortUrl = "";
+        try {
+
+            shortUrl = toHexStr(hashAlgorithm(longURL)).substring(0,7);
+
+        } catch (Exception e) {
+            logger.info(String.valueOf(e));
+        }
+
         logger.info(shortUrl);
         shortUrl = "https://example.com/".concat(shortUrl);
-        saveData(urlRequest.getUrl(),shortUrl);
+        saveData(longURL, shortUrl);
         return shortUrl;
     }
 
-    void saveData(String longUrl, String shortUrl){
+    void saveData(String longUrl, String shortUrl) {
         UrlResponse urlResponse = new UrlResponse();
         urlResponse.setLongURL(longUrl);
         urlResponse.setShortURL(shortUrl);
@@ -44,12 +55,25 @@ public class URLServiceImpl implements URLService {
 
     }
 
-    public String hashAlgorithm(String urlLink){
+    public byte[] hashAlgorithm(String urlLink) throws NoSuchAlgorithmException {
 
-        byte[] id = urlLink.getBytes();
-        String encodedId = Base64.getEncoder().encodeToString(id);
-        return encodedId.substring(0, 7);
+        MessageDigest msgDgst = MessageDigest.getInstance("SHA-256");
+        logger.info(Arrays.toString(msgDgst.digest(urlLink.getBytes(StandardCharsets.UTF_8))));
+        return msgDgst.digest(urlLink.getBytes(StandardCharsets.UTF_8));
 
+    }
+
+
+    public static String toHexStr(byte[] hash) {
+
+        BigInteger no = new BigInteger(1, hash);
+        StringBuilder hexStr = new StringBuilder(no.toString(16));
+
+        while (hexStr.length() < 32) {
+            hexStr.insert(0, '0');
+        }
+
+        return hexStr.toString();
     }
 
 
