@@ -7,6 +7,8 @@ import com.example.URLShortner.Service.URLResponseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class GetURLServiceImpl implements GetURLService {
@@ -23,5 +25,10 @@ public class GetURLServiceImpl implements GetURLService {
 
         return urlResponse;
 
+    }
+
+    @Override
+    public List<UrlResponse> getAllURLs() {
+        return urlResponseRepo.getAllURLs();
     }
 }
