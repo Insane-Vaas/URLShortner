@@ -1,9 +1,11 @@
 package com.example.URLShortner.Service;
 
+import com.example.URLShortner.Domain.ShortURL;
 import com.example.URLShortner.Domain.URLRequest;
+import com.example.URLShortner.Domain.UrlResponse;
 
 public interface URLService {
 
-    String execute(URLRequest urlRequest);
+    ShortURL execute(URLRequest urlRequest);
 
 }

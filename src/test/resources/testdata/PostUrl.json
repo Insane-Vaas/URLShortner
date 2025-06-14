@@ -1,0 +1,12 @@
+{
+  "name": "Test Post URL",
+  "request": {
+    "url": "https://www.cricbuzz.com/live-cricket-scores/106673/aus-vs-rsa-final-icc-world-test-championship-final-2023"
+
+  },
+  "expectedResponse": {
+    "shortURL": "https://example.com/ed6790c"
+  },
+  "method": "POST",
+  "url": "/urlshortner"
+}

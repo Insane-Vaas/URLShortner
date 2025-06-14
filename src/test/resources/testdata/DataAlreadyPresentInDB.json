@@ -1,0 +1,12 @@
+{
+  "name": "Test Post URL",
+  "request": {
+    "url": "https://stackoverflow.com/questions/42966967/creating-a-custom-query-with-spring-data-jpa"
+
+  },
+  "expectedResponse": {
+    "message": "Data already present in Database"
+  },
+  "method": "POST",
+  "url": "/urlshortner"
+}

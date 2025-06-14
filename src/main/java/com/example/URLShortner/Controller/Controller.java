@@ -1,6 +1,7 @@
 package com.example.URLShortner.Controller;
 
 
+import com.example.URLShortner.Domain.ShortURL;
 import com.example.URLShortner.Domain.URLRequest;
 import com.example.URLShortner.Domain.UrlResponse;
 import com.example.URLShortner.Service.GetURLService;
@@ -21,7 +22,7 @@ public class Controller {
     GetURLService getURLService;
 
     @PostMapping("/urlshortner")
-    public String urlShortner(@RequestBody URLRequest urlRequest){
+    public ShortURL urlShortner(@RequestBody URLRequest urlRequest){
         return urlService.execute(urlRequest);
     }
 

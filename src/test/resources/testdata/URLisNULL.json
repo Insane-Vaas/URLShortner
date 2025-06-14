@@ -1,0 +1,12 @@
+{
+  "name": "Test Post URL",
+  "request": {
+    "url": ""
+
+  },
+  "expectedResponse": {
+    "message": "Url provided is Empty. Please provide Legit URL"
+  },
+  "method": "POST",
+  "url": "/urlshortner"
+}

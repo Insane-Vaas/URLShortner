@@ -2,6 +2,7 @@ package com.example.URLShortner.Service.Implementation;
 
 import ch.qos.logback.core.util.StringUtil;
 import com.example.URLShortner.Controller.ExceptionHandlerController;
+import com.example.URLShortner.Domain.ShortURL;
 import com.example.URLShortner.Domain.URLRequest;
 import com.example.URLShortner.Domain.UrlResponse;
 import com.example.URLShortner.Exception.APIException;
@@ -31,7 +32,7 @@ public class URLServiceImpl implements URLService {
     Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @Override
-    public String execute(URLRequest urlRequest) {
+    public ShortURL execute(URLRequest urlRequest) {
         String longURL = urlRequest.getUrl();
         logger.info(urlRequest.toString());
 
@@ -47,16 +48,14 @@ public class URLServiceImpl implements URLService {
         } catch (Exception e) {
             logger.info(String.valueOf(e));
         }
-
-        logger.info(shortUrl);
-        shortUrl = genrateReponse(shortUrl,longURL);
-        return shortUrl;
+        return genrateReponse(shortUrl,longURL);
     }
 
-    private String genrateReponse(String shortUrl, String longURL) {
+    private ShortURL genrateReponse(String shortUrl, String longURL) {
         shortUrl = "https://example.com/".concat(shortUrl);
         saveData(longURL, shortUrl);
-        return shortUrl;
+        logger.info(shortUrl);
+        return new ShortURL(shortUrl);
     }
 
     private void saveData(String longUrl, String shortUrl) {
